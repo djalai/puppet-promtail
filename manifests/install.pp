@@ -38,7 +38,7 @@ class promtail::install {
     ensure => directory,
   }
 
-  archive { "${binary_path}.gz":
+  archive { "${binary_path}.${archive_type}":
     ensure        => present,
     source        => "${promtail::source_url}/${promtail::version}/${release_file_name}.${archive_type}",
     extract       => true,
@@ -53,7 +53,7 @@ class promtail::install {
     $binary_path:
       ensure  => file,
       mode    => '0755',
-      require => Archive["${binary_path}.gz"],
+      require => Archive["${binary_path}.${archive_type}"],
       ;
     "${promtail::bin_dir}/promtail":
       ensure  => link,
